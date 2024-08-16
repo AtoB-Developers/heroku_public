@@ -196,16 +196,9 @@ if (heroku.dockerBuildArgs) {
 
     // Check if using Docker
     if (!heroku.usedocker) {
-      // Check if Repo clone is shallow
-      const isShallow = execSync(
-        "git rev-parse --is-shallow-repository"
-      ).toString();
-
-      // If the Repo clone is shallow, make it unshallow
-      if (isShallow === "true\n") {
-        execSync("git fetch --prune --unshallow");
-      }
-    }
+      // Make sure the repository is shallow (10 commits) for performance reasons
+      execSync("git fetch --depth 10");
+  }
 
     execSync(createCatFile(heroku));
     console.log("Created and wrote to ~/.netrc");
