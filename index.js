@@ -196,8 +196,8 @@ if (heroku.dockerBuildArgs) {
 
     // Check if using Docker
     if (!heroku.usedocker) {
-      // Make sure the repository is shallow (10 commits) for performance reasons
-      execSync("git fetch --depth 10");
+      // Make sure the repository is shallow (0 commits) for performance reasons
+      execSync("git fetch --depth 0");
   }
 
     execSync(createCatFile(heroku));
