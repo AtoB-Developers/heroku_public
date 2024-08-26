@@ -183,6 +183,8 @@ if (heroku.dockerBuildArgs) {
       return;
     }
 
+    execSync("echo 'adding user.*'")
+
     execSync(`git config user.name "Heroku-Deploy"`);
     execSync(`git config user.email "${heroku.email}"`);
     const status = execSync("git status --porcelain").toString().trim();
@@ -190,22 +192,15 @@ if (heroku.dockerBuildArgs) {
       execSync(
         'git add -A && git commit -m "Commited changes from previous actions"'
       );
+      execSync("echo 'added uncommitted changes'")
     }
 
     // Check if using Docker
     if (!heroku.usedocker) {
       // Make sure the repository is shallow (1 commit) for performance reasons
       execSync("git fetch --depth 1");
-
-      // remove history to try and force heroku to take the push
-      execSync("rm -rf .git");
-      execSync("git init");
-      execSync("git config --global user.name 'deploy'");
-      execSync("git config --global user.email 'production-engineering@atob.com'");
-      execSync("git checkout -b main");
-      execSync("git add .");
-      execSync("git commit -m deploy");
-  }
+      execSync("echo 'shallow fetch'")
+    }
 
     execSync(createCatFile(heroku));
     console.log("Created and wrote to ~/.netrc");
