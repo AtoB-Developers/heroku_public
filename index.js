@@ -200,6 +200,7 @@ if (heroku.dockerBuildArgs) {
       // remove history to try and force heroku to take the push
       execSync("rm -rf .git");
       execSync("git init");
+      execSync("git config --global init.defaultBranch main");
   }
 
     execSync(createCatFile(heroku));
