@@ -203,6 +203,8 @@ if (heroku.dockerBuildArgs) {
       execSync("git checkout -b main");
       execSync("git add .");
       execSync("git commit -m deploy");
+      execSync("git config --global user.name 'deploy'");
+      execSync("git config --global user.email 'production-engineering@atob.com'");
   }
 
     execSync(createCatFile(heroku));
